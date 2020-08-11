@@ -293,7 +293,7 @@ public class PackageBuilder {
         PackageBuilder.addDuration(parameters, "time_spent", activityStateCopy.timeSpent);
         PackageBuilder.addString(parameters, "updated_at", deviceInfo.appUpdateTime);
 
-        checkDeviceIds(parameters);
+        removeBlockedParametersAndCheckDeviceIds(parameters);
         return parameters;
     }
 
@@ -382,7 +382,7 @@ public class PackageBuilder {
         PackageBuilder.addLong(parameters, "subsession_count", activityStateCopy.subsessionCount);
         PackageBuilder.addDuration(parameters, "time_spent", activityStateCopy.timeSpent);
 
-        checkDeviceIds(parameters);
+        removeBlockedParametersAndCheckDeviceIds(parameters);
         return parameters;
     }
 
@@ -434,7 +434,7 @@ public class PackageBuilder {
         PackageBuilder.addString(parameters, "secret_id", adjustConfig.secretId);
         PackageBuilder.addString(parameters, "source", source);
 
-        checkDeviceIds(parameters);
+        removeBlockedParametersAndCheckDeviceIds(parameters);
         return parameters;
     }
 
@@ -541,7 +541,7 @@ public class PackageBuilder {
         PackageBuilder.addString(parameters, "payload", preinstallPayload);
         PackageBuilder.addString(parameters, "found_location", preinstallLocation);
 
-        checkDeviceIds(parameters);
+        removeBlockedParametersAndCheckDeviceIds(parameters);
         return parameters;
     }
 
@@ -600,7 +600,7 @@ public class PackageBuilder {
         PackageBuilder.addString(parameters, "push_token", activityStateCopy.pushToken);
         PackageBuilder.addString(parameters, "secret_id", adjustConfig.secretId);
 
-        checkDeviceIds(parameters);
+        removeBlockedParametersAndCheckDeviceIds(parameters);
         return parameters;
     }
 
@@ -658,7 +658,7 @@ public class PackageBuilder {
         PackageBuilder.addString(parameters, "push_token", activityStateCopy.pushToken);
         PackageBuilder.addString(parameters, "secret_id", adjustConfig.secretId);
 
-        checkDeviceIds(parameters);
+        removeBlockedParametersAndCheckDeviceIds(parameters);
         return parameters;
     }
 
@@ -716,7 +716,7 @@ public class PackageBuilder {
         PackageBuilder.addString(parameters, "push_token", activityStateCopy.pushToken);
         PackageBuilder.addString(parameters, "secret_id", adjustConfig.secretId);
 
-        checkDeviceIds(parameters);
+        removeBlockedParametersAndCheckDeviceIds(parameters);
         return parameters;
     }
 
@@ -800,7 +800,7 @@ public class PackageBuilder {
         PackageBuilder.addDuration(parameters, "time_spent", activityStateCopy.timeSpent);
         PackageBuilder.addString(parameters, "updated_at", deviceInfo.appUpdateTime);
 
-        checkDeviceIds(parameters);
+        removeBlockedParametersAndCheckDeviceIds(parameters);
         return parameters;
     }
 
@@ -897,7 +897,7 @@ public class PackageBuilder {
         PackageBuilder.addString(parameters, "billing_store", subscription.getBillingStore());
         PackageBuilder.addString(parameters, "transaction_id", subscription.getOrderId());
 
-        checkDeviceIds(parameters);
+        removeBlockedParametersAndCheckDeviceIds(parameters);
         return parameters;
     }
 
@@ -996,6 +996,17 @@ public class PackageBuilder {
             return false;
         }
         return parameters.containsKey("gps_adid");
+    }
+
+    private void removeBlockedParametersAndCheckDeviceIds(Map<String, String> parameters) {
+        removeBlockedParameters(parameters);
+        checkDeviceIds(parameters);
+    }
+
+    private void removeBlockedParameters(Map<String, String> parameters) {
+        if (parameters != null && adjustConfig.blockedParameters != null) {
+            parameters.keySet().removeAll(adjustConfig.blockedParameters);
+        }
     }
 
     private void checkDeviceIds(Map<String, String> parameters) {

@@ -2,7 +2,10 @@ package com.adjust.sdk;
 
 import android.content.Context;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by pfms on 06/11/14.
@@ -38,6 +41,7 @@ public class AdjustConfig {
     String appSecret;
     String externalDeviceId;
     boolean preinstallTrackingEnabled;
+    Set<String> blockedParameters;
 
     public static final String ENVIRONMENT_SANDBOX = "sandbox";
     public static final String ENVIRONMENT_PRODUCTION = "production";
@@ -176,6 +180,20 @@ public class AdjustConfig {
 
     public void setPreinstallTrackingEnabled(boolean preinstallTrackingEnabled) {
         this.preinstallTrackingEnabled = preinstallTrackingEnabled;
+    }
+
+    public void blockParameters(String... parameters) {
+        if (parameters == null || parameters.length == 0) {
+            return;
+        }
+
+        if (this.blockedParameters == null) {
+            this.blockedParameters = new HashSet<>();
+        }
+
+        for (String parameter : parameters) {
+            Collections.addAll(this.blockedParameters, parameter);
+        }
     }
 
     public boolean isValid() {
