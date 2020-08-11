@@ -3,7 +3,10 @@ package com.adjust.sdk;
 import android.content.Context;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by pfms on 06/11/14.
@@ -37,6 +40,7 @@ public class AdjustConfig {
     List<String> urlStrategyDomains;
     boolean useSubdomains;
     boolean isDataResidency;
+    Set<String> blockedParameters;
     String preinstallFilePath;
     boolean coppaComplianceEnabled;
     boolean playStoreKidsComplianceEnabled;
@@ -241,6 +245,20 @@ public class AdjustConfig {
 
     public String getFbAppId() {
         return fbAppId;
+    }
+
+    public void blockParameters(String... parameters) {
+        if (parameters == null || parameters.length == 0) {
+            return;
+        }
+
+        if (this.blockedParameters == null) {
+            this.blockedParameters = new HashSet<>();
+        }
+
+        for (String parameter : parameters) {
+            Collections.addAll(this.blockedParameters, parameter);
+        }
     }
 
     public boolean isDeviceIdsReadingOnceEnabled() {
