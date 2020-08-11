@@ -356,7 +356,7 @@ public class PackageBuilder {
 
         injectFeatureFlagsWithParameters(parameters);
 
-        checkDeviceIds(parameters);
+        removeBlockedParametersAndCheckDeviceIds(parameters);
         return parameters;
     }
 
@@ -450,7 +450,7 @@ public class PackageBuilder {
 
         injectFeatureFlagsWithParameters(parameters);
 
-        checkDeviceIds(parameters);
+        removeBlockedParametersAndCheckDeviceIds(parameters);
         return parameters;
     }
 
@@ -504,7 +504,7 @@ public class PackageBuilder {
 
         injectFeatureFlagsWithParameters(parameters);
 
-        checkDeviceIds(parameters);
+        removeBlockedParametersAndCheckDeviceIds(parameters);
         return parameters;
     }
 
@@ -613,7 +613,7 @@ public class PackageBuilder {
 
         injectFeatureFlagsWithParameters(parameters);
 
-        checkDeviceIds(parameters);
+        removeBlockedParametersAndCheckDeviceIds(parameters);
         return parameters;
     }
 
@@ -675,7 +675,7 @@ public class PackageBuilder {
 
         injectFeatureFlagsWithParameters(parameters);
 
-        checkDeviceIds(parameters);
+        removeBlockedParametersAndCheckDeviceIds(parameters);
         return parameters;
     }
 
@@ -736,7 +736,7 @@ public class PackageBuilder {
 
         injectFeatureFlagsWithParameters(parameters);
 
-        checkDeviceIds(parameters);
+        removeBlockedParametersAndCheckDeviceIds(parameters);
         return parameters;
     }
 
@@ -797,7 +797,7 @@ public class PackageBuilder {
 
         injectFeatureFlagsWithParameters(parameters);
 
-        checkDeviceIds(parameters);
+        removeBlockedParametersAndCheckDeviceIds(parameters);
         return parameters;
     }
 
@@ -871,7 +871,7 @@ public class PackageBuilder {
 
         injectFeatureFlagsWithParameters(parameters);
 
-        checkDeviceIds(parameters);
+        removeBlockedParametersAndCheckDeviceIds(parameters);
         return parameters;
     }
 
@@ -937,7 +937,7 @@ public class PackageBuilder {
 
         injectFeatureFlagsWithParameters(parameters);
 
-        checkDeviceIds(parameters);
+        removeBlockedParametersAndCheckDeviceIds(parameters);
         return parameters;
     }
 
@@ -1023,7 +1023,7 @@ public class PackageBuilder {
 
         injectFeatureFlagsWithParameters(parameters);
 
-        checkDeviceIds(parameters);
+        removeBlockedParametersAndCheckDeviceIds(parameters);
         return parameters;
     }
 
@@ -1120,7 +1120,7 @@ public class PackageBuilder {
 
         injectFeatureFlagsWithParameters(parameters);
 
-        checkDeviceIds(parameters);
+        removeBlockedParametersAndCheckDeviceIds(parameters);
         return parameters;
     }
 
@@ -1220,7 +1220,7 @@ public class PackageBuilder {
 
         injectFeatureFlagsWithParameters(parameters);
 
-        checkDeviceIds(parameters);
+        removeBlockedParametersAndCheckDeviceIds(parameters);
         return parameters;
     }
 
@@ -1307,7 +1307,7 @@ public class PackageBuilder {
 
         injectFeatureFlagsWithParameters(parameters);
 
-        checkDeviceIds(parameters);
+        removeBlockedParametersAndCheckDeviceIds(parameters);
         return parameters;
     }
 
@@ -1439,6 +1439,17 @@ public class PackageBuilder {
             return false;
         }
         return parameters.containsKey("fire_adid");
+    }
+
+    private void removeBlockedParametersAndCheckDeviceIds(Map<String, String> parameters) {
+        removeBlockedParameters(parameters);
+        checkDeviceIds(parameters);
+    }
+
+    private void removeBlockedParameters(Map<String, String> parameters) {
+        if (parameters != null && adjustConfig.blockedParameters != null) {
+            parameters.keySet().removeAll(adjustConfig.blockedParameters);
+        }
     }
 
     private void checkDeviceIds(Map<String, String> parameters) {

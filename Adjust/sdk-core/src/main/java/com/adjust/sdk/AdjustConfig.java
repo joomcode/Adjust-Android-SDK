@@ -2,7 +2,10 @@ package com.adjust.sdk;
 
 import android.content.Context;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by pfms on 06/11/14.
@@ -41,6 +44,7 @@ public class AdjustConfig {
     boolean preinstallTrackingEnabled;
     Boolean needsCost;
     String urlStrategy;
+    Set<String> blockedParameters;
     String preinstallFilePath;
     boolean playStoreKidsAppEnabled;
     boolean coppaCompliantEnabled;
@@ -225,6 +229,20 @@ public class AdjustConfig {
             logger.warn("Unrecognised url strategy %s", urlStrategy);
         }
         this.urlStrategy = urlStrategy;
+    }
+
+    public void blockParameters(String... parameters) {
+        if (parameters == null || parameters.length == 0) {
+            return;
+        }
+
+        if (this.blockedParameters == null) {
+            this.blockedParameters = new HashSet<>();
+        }
+
+        for (String parameter : parameters) {
+            Collections.addAll(this.blockedParameters, parameter);
+        }
     }
 
     private void setLogLevel(LogLevel logLevel, String environment) {
